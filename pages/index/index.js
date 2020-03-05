@@ -18,6 +18,7 @@ Page({
    */
   onLoad: function(options) {
     items = this.data.itemList;
+    this.drawTime = 0
     this.setDropItem({
       url: '/images/1.png'
     });
@@ -78,7 +79,7 @@ Page({
 
     console.log(items[index])
   },
-  WraptouchMove: function(e) {
+  WraptouchMove(e) {
     if (flag) {
       flag = false;
       setTimeout(() => {
@@ -101,7 +102,10 @@ Page({
       itemList: items
     })
   },
-  oTouchStart: function(e) {
+  WraptouchEnd() {
+    this.synthesis()
+  },
+  oTouchStart(e) {
     //找到点击的那个图片对象，并记录
     for (let i = 0; i < items.length; i++) {
       items[i].active = false;
@@ -204,11 +208,17 @@ Page({
       itemList: items
     })
   },
-  synthesis () { // 合成图片
-    console.log('合成图片')
+  openMask () {
+    if (this.drawTime == 0) {
+      this.synthesis()
+    }
     this.setData({
       showCanvas: true
     })
+  },
+  synthesis() { // 合成图片
+    this.drawTime = this.drawTime + 1
+    console.log('合成图片')
     maskCanvas.save();
     maskCanvas.beginPath();
     //一张白图  可以不画
@@ -219,18 +229,19 @@ Page({
 
     //画背景 hCw 为 1.62 背景图的高宽比
     maskCanvas.drawImage('/images/bg.png', 0, 0, this.data.canvasWidth, this.data.canvasHeight);
-     /*
-         num为canvas内背景图占canvas的百分比，若全背景num =1
-         prop值为canvas内背景的宽度与可移动区域的宽度的比，如一致，则prop =1;
-        */
+    /*
+        num为canvas内背景图占canvas的百分比，若全背景num =1
+        prop值为canvas内背景的宽度与可移动区域的宽度的比，如一致，则prop =1;
+       */
     //画组件
-    const num = 1, prop = 1;
+    const num = 1,
+      prop = 1;
     items.forEach((currentValue, index) => {
       maskCanvas.save();
-      maskCanvas.translate(this.data.canvasWidth * (1 - num) / 2, 0);  
+      maskCanvas.translate(this.data.canvasWidth * (1 - num) / 2, 0);
       maskCanvas.beginPath();
       maskCanvas.translate(currentValue.x * prop, currentValue.y * prop); //圆心坐标
-      maskCanvas.rotate(currentValue.angle * Math.PI / 180); 
+      maskCanvas.rotate(currentValue.angle * Math.PI / 180);
       maskCanvas.translate(-(currentValue.width * currentValue.scale * prop / 2), -(currentValue.height * currentValue.scale * prop / 2))
       maskCanvas.drawImage(currentValue.image, 0, 0, currentValue.width * currentValue.scale * prop, currentValue.height * currentValue.scale * prop);
       maskCanvas.restore();
@@ -253,13 +264,33 @@ Page({
       showCanvas: false
     })
   },
-  saveImg: function () {
+  saveImg: function() {
     wx.saveImageToPhotosAlbum({
       filePath: this.data.canvasTemImg,
       success: res => {
         wx.showToast({
           title: '保存成功',
           icon: "success"
+        })
+      },
+      fail: res => {
+        console.log(res)
+        wx.openSetting({
+          success: settingdata => {
+            console.log(settingdata)
+            if (settingdata.authSetting['scope.writePhotosAlbum']) {
+              console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
+            } else {
+              console.log('获取权限失败，给出不给权限就无法正常使用的提示')
+            }
+          },
+          fail: error => {
+            console.log(error)
+          }
+        })
+        wx.showModal({
+          title: '提示',
+          content: '保存失败，请确保相册权限已打开',
         })
       }
     })

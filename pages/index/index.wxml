@@ -9,13 +9,13 @@
       <view class='imgWrap {{item.active? "touchActive":""}}' style="transform: rotate({{item.angle}}deg); border: {{item.active?4*item.oScale:0}}rpx #fff dashed;">
         <image src='{{item.image}}' data-id='{{item.id}}' style='width:{{item.width}}px;height:{{item.height}}px;' bindtouchstart='WraptouchStart' bindtouchmove='WraptouchMove' bindtouchend='WraptouchEnd'></image>
         <image class='x' src='../../images/x.png' style='transform: scale({{item.oScale}});transform-origin:center;' data-id='{{item.id}}' bindtap='deleteItem'></image>
-        <image class='o' src='../../images/o.png' style='transform: scale({{item.oScale}});transform-origin:center;' data-id='{{item.id}}' bindtouchstart='oTouchStart' bindtouchmove='oTouchMove'></image>
+        <image class='o' src='../../images/o.png' style='transform: scale({{item.oScale}});transform-origin:center;' data-id='{{item.id}}' bindtouchstart='oTouchStart' bindtouchmove='oTouchMove' bindtouchend='WraptouchEnd'></image>
       </view>
     </view>
   </block>
   <!-- **************操作区域************  -->
   <view class="fixed">
-    <button bindtap="synthesis">合成图片</button>
+    <button bindtap="openMask">合成图片</button>
   </view>
 </view>
 <view class='canvasWrap' hidden="{{!showCanvas}}">
