@@ -1,0 +1,152 @@
+/**index.wxss**/
+.bg {
+  width: 100%;
+  height: 100vh;
+}
+.contentWarp{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  /* background-color: #d1e3f1; */
+}
+.touchWrap{
+    transform-origin: center;
+    position: absolute;
+    z-index: 100;
+}
+
+.imgWrap {
+    box-sizing: border-box;
+    width: 100%;
+    transform-origin: center;
+    float: left;
+    border: 5rpx transparent dashed;
+}
+.imgWrap image {
+    float: left;
+}
+.touchActive .x {
+    display: block;
+}
+
+.touchActive .o {
+    display: block;
+}
+
+.x {
+    position: absolute;
+    top: -25rpx;
+    left: -25rpx;
+    z-index: 500;
+    display: none;
+    width: 50rpx;
+    height: 50rpx;
+    overflow: hidden;
+    font-weight: bold;
+    color: #d1e3f1;
+}
+.o {
+    position: absolute;
+    bottom: -25rpx;
+    right: -25rpx;
+    width: 50rpx;
+    height: 50rpx;
+    text-align: center;
+    display: none;
+    overflow: hidden;
+    font-weight: bold;
+    color: #d1e3f1;
+}
+.active {
+    background-color: rgb(78, 114, 151);
+}
+
+.active view {
+    border: none;
+}
+.touchActive {
+    /* border: 4rpx #fff dashed; */
+    z-index: 400;
+}
+.fixed {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+
+.canvasWrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    text-align: center;
+}
+
+.maskCanvas {
+    position: absolute;
+    left: -200%;
+    top: 0;
+}
+
+.btn {
+    font-size: 30rpx;
+    color: #81b7c4;
+    border: 3rpx solid #81b7c4;
+    background-color: #fff;
+    line-height: 90rpx;
+    width: 50%;
+    margin-top: 20rpx;
+    height: 90rpx;
+}
+
+.btnView view {
+    padding-bottom: 20rpx;
+}
+
+.hand {
+    position: absolute;
+    left: 100rpx;
+    right: 0;
+    margin: auto;
+    z-index: 100;
+}
+
+.getUserInfoBtn {
+    position: initial;
+    border: none;
+    background-color: none;
+}
+
+.getUserInfoBtn::after {
+    border: none;
+}
+
+.btn_view {
+    display: flex;
+    padding: 20rpx;
+}
+
+.btn_view button {
+    width: 300rpx;
+    font-size: 30rpx;
+    color: #81b7c4;
+    border: 3rpx solid #81b7c4;
+    background-color: #fff;
+    line-height: 90rpx;
+}
+
+.resImg {
+  width: 75%;
+  margin-top: 10px;
+}
